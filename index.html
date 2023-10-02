@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock, Paper & Scissors</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="container mx-auto">
+      <h1 class="font-bold text-center mt-12 text-4xl">
+        Rock, Paper & Scissors
+      </h1>
+      <hr class="mt-10" />
+      <div class="flex align-center justify-center">
+        <div class="">
+          <div class="flex gap-3 flex-col mt-4">
+            <p class="player-choice">&nbsp;</p>
+            <p class="computer-choice">&nbsp;</p>
+            <p class="round-result text-red-400">&nbsp;</p>
+          </div>
+
+          <p class="mt-12 mb-2">Choose rock, paper, or scissors</p>
+          <div class="flex gap-2">
+            <button
+              onclick="choose(0)"
+              class="border-2 border-gray-400 rounded py-2 px-4 text-gray-400"
+            >
+              Rock
+            </button>
+
+            <button
+              onclick="choose(1)"
+              class="border-2 border-red-400 rounded py-2 px-4 text-red-400"
+            >
+              Paper
+            </button>
+
+            <button
+              onclick="choose(2)"
+              class="border-2 border-green-400 rounded py-2 px-4 text-green-400"
+            >
+              Scissors
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function choose(x) {
+      fetch("/play?c=" + x)
+        .then((res) => res.json())
+        .then((data) => {
+          if (x == 0) {
+            document.querySelector(".player-choice").innerHTML =
+              "Player chose ROCK";
+          } else if (x == 1) {
+            document.querySelector(".player-choice").innerHTML =
+              "Player chose PAPER";
+          } else {
+            document.querySelector(".player-choice").innerHTML =
+              "Player chose SCISSORS";
+          }
+          document.querySelector(".computer-choice").innerHTML =
+            data.computerChoice;
+          document.querySelector(".round-result").innerHTML = data.roundResult;
+        });
+    }
+  </script>
+</html>
